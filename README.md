@@ -71,6 +71,9 @@ docker compose run nodejs_backend npx prisma migrate dev --name init
 docker compose up
 ```
 
+
+
+
 ## ⚙️ Setup Instructions (Normal setup)
 ## 🐳 Running the App Locally 
 
