@@ -83,7 +83,10 @@ docker compose up
 ```bash
 git clone https://github.com/Neerajd3vv/another_one.git
 cd another_one
+```
 
+```bash
+cd another_one
 ```
 #### 🔧 Backend Setup (/backend)
 1. Navigate to the backend folder
@@ -101,7 +104,6 @@ npm install
 3. Create a .env file
 ```bash
 DATABASE_URL="postgresql://username:password@localhost:5432/your_db_name"
-JWT_SECRET="your_jwt_secret"
 ```
 Replace username, password, and your_db_name with your PostgreSQL credentials.
 
