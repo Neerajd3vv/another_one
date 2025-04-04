@@ -100,7 +100,6 @@ docker compose up
 
 ```bash
 git clone https://github.com/Neerajd3vv/another_one.git
-cd another_one
 ```
 
 ```bash
