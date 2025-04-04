@@ -37,8 +37,8 @@ function Signup() {
   const signupMutation = useMutation({
     mutationFn: signupFunction,
     onSuccess: () => {
+      toast.success(" User registered, Now Login to continue...");
       navigate("/login");
-      console.log("success");
     },
     onError: (error: { message: string }) => {
       if (error.message === "User already exists with this email") {
