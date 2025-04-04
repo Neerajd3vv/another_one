@@ -42,7 +42,38 @@ frontend/ ├── public/ # Static assets ├── src/ │ ├── assets/
 
 
 
-## ⚙️ Setup Instructions
+## ⚙️ Setup Instructions (Docker)
+
+## 🐳 Running the App Locally with Docker
+
+### 📁 1. Clone the Repository
+
+```bash
+git clone https://github.com/Neerajd3vv/another_one.git
+```
+```bash
+cd another_one
+```
+
+### 2. Build Docker Images
+```bash
+docker compose build
+```
+
+### 3. Run Prisma Migrations
+```bash
+docker compose run nodejs_backend npx prisma migrate dev --name init
+```
+
+### 4. Start the App
+
+```bash
+docker compose up
+```
+
+## ⚙️ Setup Instructions (Normal setup)
+## 🐳 Running the App Locally 
+
 
 ### 📁 1. Clone the Repository
 
@@ -61,6 +92,8 @@ cd backend
 ```bash
 npm install
 ```
+
+
 
 3. Create a .env file
 ```bash
