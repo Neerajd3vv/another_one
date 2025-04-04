@@ -1,0 +1,28 @@
+version: "1"
+
+services:
+  postgres:
+    image: "postgres"
+    container_name: "postgres_container"
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "secret_pass"
+      POSTGRES_DB: "postgres"
+    volumes:
+      - postgres_vol:/data/db
+
+
+  nodejs_backend:
+    build: .
+    container_name: "nodejs_backend_container"
+    ports:
+      - "8383:8383"
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: "postgres://postgres:secret_pass@postgres:5432/postgres"              
+
+volumes:
+  postgres_vol:
