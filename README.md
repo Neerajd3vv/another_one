@@ -73,6 +73,12 @@ git clone https://github.com/Neerajd3vv/another_one.git
 cd another_one
 ```
 
+Navigate to the backend folder
+
+```bash
+cd backend
+```
+
 ### 2. Build Docker Images
 ```bash
 docker compose build
