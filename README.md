@@ -33,18 +33,36 @@ This is a full-stack application for user **registration** and **login**, built 
 
 ### Backend (`/backend`)
 
-backend/ ├── prisma/ # Database schema & migrations ├── src/ │ ├── controllers/ # Business logic for routes │ ├── routes/ # Express routes for auth │ ├── main.ts # App entry point │ ├── prismaClient.ts # Prisma client instance └── .env # Environment variables
+backend/
+├── prisma/            # Prisma schema and migrations
+├── src/
+│   ├── controllers/   # Business logic for routes
+│   ├── routes/        # Express auth routes
+│   ├── main.ts        # Entry point of the app
+│   └── prismaClient.ts# Prisma client instance
+└── .env               # Environment variables
+
 
 
 ### Frontend (`/frontend`)
 
-frontend/ ├── public/ # Static assets ├── src/ │ ├── assets/ # Static assets │ ├── components/ # Reusable UI components │ ├── lib/ # Utilities and helper functions │ ├── pages/ # Page components │ ├── App.tsx # Main App component │ ├── main.tsx # Entry point for React │ ├── index.css # Global styles │ ├── App.css # Component-specific styles └── .env # Environment variables
+frontend/
+├── public/            # Static assets
+├── src/
+│   ├── assets/        # Image and icons
+│   ├── components/    # Reusable UI components
+│   ├── lib/           # Helper utilities
+│   ├── pages/         # Page components
+│   ├── App.tsx        # Main app component
+│   ├── main.tsx       # Entry point
+│   ├── index.css      # Global styles
+│   └── App.css        # Component-specific styles
+└── .env               # Frontend environment variables
 
-
+<br/>
 
 ## ⚙️ Setup Instructions (Docker)
-
-## 🐳 Running the App Locally with Docker
+### 🐳 Running the App Locally with Docker
 
 ### 📁 1. Clone the Repository
 
@@ -71,11 +89,11 @@ docker compose run nodejs_backend npx prisma migrate dev --name init
 docker compose up
 ```
 
-
+<br/>
 
 
 ## ⚙️ Setup Instructions (Normal setup)
-## 🐳 Running the App Locally 
+### 🐳 Running the App Locally 
 
 
 ### 📁 1. Clone the Repository
@@ -118,9 +136,9 @@ npm run dev
 ```
 
 
+<br/>
 
-
-🌐 Frontend Setup (/frontend)
+#### 🌐 Frontend Setup (/frontend)
 
 1. Navigate to the frontend folder
 ```bash
