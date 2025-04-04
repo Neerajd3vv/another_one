@@ -23,7 +23,6 @@
     "@types/bcryptjs": "^2.4.6",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.1",
-    "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^22.14.0",
     "@types/react-query": "^1.2.8",
     "ts-node": "^10.9.2",
