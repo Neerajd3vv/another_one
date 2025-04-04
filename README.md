@@ -48,7 +48,7 @@ frontend/ ├── public/ # Static assets ├── src/ │ ├── assets/
 
 ```bash
 git clone https://github.com/Neerajd3vv/another_one.git
-cd project-root
+cd another_one
 
 ```
 #### 🔧 Backend Setup (/backend)
