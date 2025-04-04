@@ -2,13 +2,13 @@ interface ButtonProps {
   onClick?: () => void;
   className: string;
   type? : "submit" | "button" | "reset";
-  name: string;
   disabled?: boolean;
+  children?: React.ReactNode;
 }
-function Button({ onClick, className, name, disabled, type }: ButtonProps) {
+function Button({ onClick, className, disabled, type , children }: ButtonProps) {
   return (
     <button type={type} onClick={onClick} className={className} disabled={disabled}>
-      {name}
+      {children}
     </button>
   );
 }

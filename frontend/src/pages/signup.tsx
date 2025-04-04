@@ -3,13 +3,52 @@ import Input from "../components/input";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 const signupSchema = z.object({
   email: z.string().email("Invalid email address"),
   password: z.string().min(6, "Password must be at least 6 of characters"),
 });
 function Signup() {
+  const navigate = useNavigate();
   type singupFormType = z.infer<typeof signupSchema>;
+
+  const signupFunction = async (data: singupFormType) => {
+    const response = await fetch(
+      `${import.meta.env.VITE_BACKEND_URL}/api/auth/signup`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message);
+    }
+    // return response.json();
+  };
+
+  const signupMutation = useMutation({
+    mutationFn: signupFunction,
+    onSuccess: () => {
+      navigate("/login");
+      console.log("success");
+    },
+    onError: (error: { message: string }) => {
+      if (error.message === "User already exists with this email") {
+        toast.error(error.message);
+      } else {
+        toast.error(error.message);
+      }
+    },
+  });
+
   const {
     register,
     handleSubmit,
@@ -19,7 +58,7 @@ function Signup() {
   });
 
   const submitClicked = (data: singupFormType) => {
-    console.log(data);
+    signupMutation.mutate(data);
   };
 
   return (
@@ -64,11 +103,22 @@ function Signup() {
             )}
           </div>
         </div>
-        <Button
-          type="submit"
-          name="Signup"
-          className="bg-[#2B3A67] border-[#2B3A67] font-custom-font font-semibold text-[18px] leading-[28px] tracking-[0%] text-[#FCFCFC] w-full h-[60px] rounded-[8px]  py-[16px] flex justify-center items-center"
-        />
+        {signupMutation.isPending ? (
+          <Button
+            type="submit"
+            className="bg-[#2B3A67] border-[#2B3A67] font-custom-font font-semibold text-[18px] leading-[28px] tracking-[0%] text-[#FCFCFC] w-full h-[60px] rounded-[8px]  py-[16px] flex justify-center items-center "
+          >
+            <Loader2 className="animate-spin" />
+          </Button>
+        ) : (
+          <Button
+            type="submit"
+            disabled={signupMutation.isPending}
+            className="bg-[#2B3A67] cursor-pointer border-[#2B3A67] font-custom-font font-semibold text-[18px] leading-[28px] tracking-[0%] text-[#FCFCFC] w-full h-[60px] rounded-[8px]  py-[16px] flex justify-center items-center "
+          >
+            Sign up
+          </Button>
+        )}
       </form>
     </div>
   );

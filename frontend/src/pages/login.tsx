@@ -3,13 +3,36 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Input from "../components/input";
 import Button from "../components/button";
 import { useForm } from "react-hook-form";
+import { Loader2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email address"),
   password: z.string().min(6, "Password must be at least 6 of characters"),
 });
 function Login() {
+  const navigate = useNavigate();
   type loginFormType = z.infer<typeof loginSchema>;
+
+  const loginFunction = async (data: loginFormType) => {
+    const response = await fetch(
+      `${import.meta.env.VITE_BACKEND_URL}/api/auth/login`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message);
+    }
+  };
 
   const {
     register,
@@ -19,9 +42,24 @@ function Login() {
     resolver: zodResolver(loginSchema),
   });
 
-  const submitClicked = (data: loginFormType) => {
-    console.log(data);
-    // will do api call here later...
+  const loginMutation = useMutation({
+    mutationFn: loginFunction,
+    onSuccess: () => {
+      navigate("/home");
+    },
+    onError: (error: { message: string }) => {
+      if (error.message === "User does not exists with this email") {
+        toast.error(error.message);
+      } else if (error.message === "Invalid password") {
+        toast.error(error.message);
+      } else {
+        toast("Something went wrong");
+      }
+    },
+  });
+
+  const submitClicked = async (data: loginFormType) => {
+    loginMutation.mutate(data);
   };
 
   return (
@@ -66,11 +104,22 @@ function Login() {
             )}
           </div>
         </div>
-        <Button
-          type="submit"
-          name="Login"
-          className="bg-[#2B3A67] border-[#2B3A67] font-custom-font font-semibold text-[18px] leading-[28px] tracking-[0%] text-[#FCFCFC] w-full h-[60px] rounded-[8px]  py-[16px] flex justify-center items-center"
-        />
+        {loginMutation.isPending ? (
+          <Button
+            type="submit"
+            className="bg-[#2B3A67] border-[#2B3A67] font-custom-font font-semibold text-[18px] leading-[28px] tracking-[0%]  text-[#FCFCFC] w-full h-[60px] rounded-[8px]  py-[16px] flex justify-center items-center"
+          >
+            <Loader2 className="animate-spin mr-2" />
+          </Button>
+        ) : (
+          <Button
+            disabled={loginMutation.isPending}
+            type="submit"
+            className="bg-[#2B3A67] border-[#2B3A67] font-custom-font font-semibold text-[18px] leading-[28px] tracking-[0%]  cursor-pointer text-[#FCFCFC] w-full h-[60px] rounded-[8px]  py-[16px] flex justify-center items-center"
+          >
+            Login
+          </Button>
+        )}
       </form>
     </div>
   );
